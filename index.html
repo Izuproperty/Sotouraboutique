@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>S1737Z 柿崎中古ホテル — Investment Pro Forma (USD + JPY FX)</title>
-<meta name="description" content="Investor-grade pro forma for Shimoda lodging asset. Hotel vs Minpaku vs Flip scenarios with FX, financing summary, DSCR, and exit IRR.">
+<title>Former Hotel Just 9 Minutes from Sotoura Beach in Izu - Investment Calculator</title>
+<meta name="description" content="Investor-grade pro forma for Shimoda lodging asset. Hotel vs Minpaku vs Flip scenarios with FX, financing summary, DSCR, realism gauge, exit IRR, and ROI for flips.">
 <style>
   :root{
-    --bg:#f6f8fb; --panel:#ffffff; --ink:#0b1220; --muted:#5c6473; --brand:#16376f; --accent:#0c8b62;
-    --border:#e4e7f0; --shadow:0 8px 22px rgba(18,28,80,0.08); --radius:16px;
-    --hint:#eef5ff; --hint-border:#cfe1ff;
+    --bg:#f6f8fb; --panel:#ffffff; --ink:#0b1220; --muted:#5c6473;
+    --brand:#16376f; --accent:#0c8b62; --border:#e4e7f0; --shadow:0 8px 22px rgba(18,28,80,0.08);
+    --radius:16px; --warn:#b97900; --warnbg:#fff7e6; --ok:#0a6f4e; --okbg:#f2fbf7; --risk:#a32020; --riskbg:#fff0f0;
   }
   html,body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.55}
   .wrap{max-width:1120px;margin:22px auto;padding:0 16px}
@@ -40,20 +40,20 @@
   .kpis{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));margin-top:8px}
   .kpi{background:#fff;border:1px solid var(--border);border-radius:14px;padding:12px;text-align:center;transition:transform .12s ease}
   .kpi:hover{transform:translateY(-1px)}
-  .kpi .h{font-size:.82rem;color:var(--muted);display:flex;gap:6px;justify-content:center;align-items:center}
+  .kpi .h{font-size:.82rem;color:var(--muted)}
   .kpi .v{font-size:1.26rem;font-weight:800;margin-top:4px}
-  /* Tooltip */
-  .tip{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;
-       border:1px solid var(--border);background:#fff;font-size:.78rem;line-height:1;cursor:pointer;color:#223255}
-  .tooltip{position:fixed;z-index:50;max-width:280px;background:#fff;border:1px solid var(--hint-border);border-radius:10px;
-           box-shadow:0 10px 24px rgba(20,30,70,.14);padding:10px 12px;font-size:.9rem;color:#1f2740}
-  .hidden{display:none}
   .divider{height:1px;background:var(--border);margin:12px 0}
-  .callout{border-left:4px solid var(--accent);padding:10px 12px;background:#f3fbf8;border-radius:8px;margin-top:10px}
   .note{font-size:.92rem}
   table{width:100%;border-collapse:collapse;margin-top:8px}
   th,td{padding:8px 6px;border-bottom:1px dashed var(--border);font-size:.95rem}
   th{text-align:left;color:#31415f} td{text-align:right}
+  /* IRR Realism Gauge */
+  .gauge{display:inline-flex;gap:8px;align-items:center;justify-content:center}
+  .badgeGauge{border-radius:999px;padding:.2rem .55rem;font-size:.85rem;border:1px solid var(--border)}
+  .g-ok{background:var(--okbg);color:var(--ok);border-color:#cfe9dd}
+  .g-warn{background:var(--warnbg);color:var(--warn);border-color:#ffe1a6}
+  .g-risk{background:var(--riskbg);color:var(--risk);border-color:#ffd0d0}
+  .g-note{font-size:.88rem;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -61,8 +61,8 @@
 
   <!-- HERO -->
   <header class="hero" role="banner">
-    <h1>S1737Z 柿崎中古ホテル — Investment Pro Forma</h1>
-    <p>Shimoda (下田市柿崎) · 404.44㎡延床 · 8 keys · 1974 build · 2019 renovation ·
+    <h1>Former Hotel Just 9 Minutes from Sotoura Beach in Izu - Investment Calculator</h1>
+    <p>Shimoda (下田市柿崎) · 404.44㎡ · 8 rooms · 1974 build · 2019 renovation ·
       <a href="https://www.izumirai.com/bkndetail/3966776075/room97540665/" target="_blank" rel="noopener">View Listing</a>
     </p>
     <div class="badge">
@@ -83,7 +83,7 @@
         <label for="sc_flip" title="Sell post-renovation at buyer cap, minimal operations">Flip</label>
       </div>
     </div>
-    <div class="callout"><div class="note"><strong>Tip:</strong> The selected scenario drives Exit Value & IRR. Use Minpaku for 180-day cap, Hotel for 365-day licensed ops, or Flip for sale at buyer cap after renovation.</div></div>
+    <div class="note muted">Selected scenario drives Exit Value & IRR. Use Minpaku for the 180-day cap, Hotel for 365-day licensed ops, or Flip for sale at buyer cap after renovation.</div>
   </div>
 
   <!-- INPUTS -->
@@ -163,10 +163,10 @@
     <div class="panel">
       <h2>Hotel — Outputs</h2>
       <div class="kpis">
-        <div class="kpi"><div class="h">NOI <button class="tip" data-tip="noi">i</button></div><div id="noih" class="v">—</div></div>
-        <div class="kpi"><div class="h">Cap Rate <button class="tip" data-tip="cap">i</button></div><div id="caph" class="v">—</div></div>
-        <div class="kpi"><div class="h">Cash-on-Cash <button class="tip" data-tip="coc">i</button></div><div id="coch" class="v">—</div></div>
-        <div class="kpi"><div class="h">DSCR <button class="tip" data-tip="dscr">i</button></div><div id="dscrh" class="v">—</div></div>
+        <div class="kpi"><div class="h">NOI</div><div id="noih" class="v">—</div></div>
+        <div class="kpi"><div class="h">Cap Rate</div><div id="caph" class="v">—</div></div>
+        <div class="kpi"><div class="h">Cash-on-Cash</div><div id="coch" class="v">—</div></div>
+        <div class="kpi"><div class="h">DSCR</div><div id="dscrh" class="v">—</div></div>
       </div>
       <table id="table_hotel"></table>
     </div>
@@ -174,10 +174,10 @@
     <div class="panel">
       <h2>Minpaku — Outputs</h2>
       <div class="kpis">
-        <div class="kpi"><div class="h">NOI <button class="tip" data-tip="noi">i</button></div><div id="noim" class="v">—</div></div>
-        <div class="kpi"><div class="h">Cap Rate <button class="tip" data-tip="cap">i</button></div><div id="capm" class="v">—</div></div>
-        <div class="kpi"><div class="h">Cash-on-Cash <button class="tip" data-tip="coc">i</button></div><div id="cocm" class="v">—</div></div>
-        <div class="kpi"><div class="h">DSCR <button class="tip" data-tip="dscr">i</button></div><div id="dscrm" class="v">—</div></div>
+        <div class="kpi"><div class="h">NOI</div><div id="noim" class="v">—</div></div>
+        <div class="kpi"><div class="h">Cap Rate</div><div id="capm" class="v">—</div></div>
+        <div class="kpi"><div class="h">Cash-on-Cash</div><div id="cocm" class="v">—</div></div>
+        <div class="kpi"><div class="h">DSCR</div><div id="dscrm" class="v">—</div></div>
       </div>
       <table id="table_minpaku"></table>
     </div>
@@ -195,9 +195,15 @@
     <div class="panel">
       <h2>Exit / IRR (Selected Scenario)</h2>
       <div class="kpis">
-        <div class="kpi"><div class="h">IRR <button class="tip" data-tip="irr">i</button></div><div id="irr" class="v">—</div></div>
+        <div class="kpi">
+          <div class="h">IRR</div>
+          <div class="v" id="irr">—</div>
+          <div class="gauge"><span id="gaugeBadge" class="badgeGauge">—</span></div>
+          <div id="gaugeNote" class="g-note"></div>
+        </div>
         <div class="kpi"><div class="h">Exit Value</div><div id="exitv" class="v">—</div></div>
         <div class="kpi"><div class="h">Net Sale Proceeds</div><div id="net" class="v">—</div></div>
+        <div class="kpi"><div class="h">Total ROI (Flip)</div><div id="roi" class="v">—</div></div>
       </div>
       <label>Exit Cap Rate (%)</label>
       <input id="exitcap" type="number" step="0.5" value="8">
@@ -207,13 +213,25 @@
     </div>
   </div>
 
+  <div class="panel" style="margin-top:16px">
+    <h2>Metric Notes</h2>
+    <div class="note">
+      <strong>NOI (Net Operating Income):</strong> revenue minus operating expenses (before financing & taxes).<br>
+      <strong>Cap Rate:</strong> NOI ÷ total cost or market value; unlevered return snapshot.<br>
+      <strong>Cash-on-Cash:</strong> pre-tax cash flow ÷ equity invested; annual yield on actual cash in.<br>
+      <strong>DSCR:</strong> Debt Service Coverage Ratio = NOI ÷ annual loan payments; ≥ 1.25× is commonly “bankable.”<br>
+      <strong>IRR:</strong> Internal Rate of Return; annualized return including income and sale proceeds over the hold.<br>
+      <strong>Total ROI (Flip):</strong> (Net Sale Proceeds – Equity) ÷ Equity; unannualized profit % at sale.
+    </div>
+  </div>
+
   <footer style="margin-top:18px">
     <div class="divider"></div>
     <div class="note">For discussion purposes only; not investment advice. Licensing (旅館業/民泊), fire/life safety, and seismic compliance require local confirmation.</div>
   </footer>
 </div>
 
-<!-- Tooltips (tap/hover) + Calculator Logic -->
+<!-- Calculator Logic -->
 <script>
 (function(){
   "use strict";
@@ -223,7 +241,6 @@
   const fmtJPY = new Intl.NumberFormat('ja-JP',{style:'currency',currency:'JPY',maximumFractionDigits:0});
   const asUSD = x => fmtUSD.format(Math.round(x||0));
   const asJPY = x => fmtJPY.format(Math.round(x||0));
-
   const get = id => document.getElementById(id);
   const v = id => parseFloat(get(id).value)||0;
 
@@ -264,9 +281,31 @@
     return (lo+hi)/2;
   }
 
+  // ---------- Realism Gauge ----------
+  function setGauge(irrVal){
+    const badge = get('gaugeBadge');
+    const note = get('gaugeNote');
+    badge.className = 'badgeGauge';
+    note.textContent = '';
+    if(!isFinite(irrVal)){ badge.textContent='—'; return; }
+    const pct = (irrVal*100).toFixed(1) + '%';
+    if(irrVal < 0.20){
+      badge.classList.add('g-ok');
+      badge.textContent = 'Typical Range';
+      note.textContent = 'IRR ' + pct + ' — looks within normal targeting for smaller hospitality assets.';
+    } else if (irrVal < 0.40){
+      badge.classList.add('g-warn');
+      badge.textContent = 'Aggressive';
+      note.textContent = 'IRR ' + pct + ' — solid if assumptions hold. Stress-test cap rate, timeline, and costs.';
+    } else {
+      badge.classList.add('g-risk');
+      badge.textContent = 'Exceptional – Verify';
+      note.textContent = 'IRR ' + pct + ' — high result. Re-check Buyer Exit Cap, sale timeline, sell costs, and scope contingencies.';
+    }
+  }
+
   // ---------- Compute ----------
   function compute(){
-    // Acquisition & FX preview
     const fx=v('fx')||1;
     const price=v('price_usd'), softPct=v('soft')/100, reno=v('reno_usd');
     const softAmt=price*softPct, total=price+softAmt+reno;
@@ -276,7 +315,7 @@
     get('reno_jpy').textContent  = '≈ ' + asJPY(reno*fx);
     get('totalcost_line').innerHTML = 'Total Cost: ' + asUSD(total) + showJPY(total);
 
-    // Operations
+    // Ops
     const keys=Math.max(v('keys'),0);
     const adrH=v('adr_hotel'), occH=v('occ_hotel')/100, adrM=v('adr_minpaku'), occM=v('occ_minpaku')/100;
     const opex=v('opex')/100, mgmt=v('mgmt')/100;
@@ -285,15 +324,15 @@
     const ltv=v('ltv')/100, rate=v('rate'), amort=Math.max(v('amort'),1);
     const loan= total*ltv, equity= total-loan, debtAnnual=mortPmt(loan,rate,amort)*12;
 
-    // Hotel (365 d)
+    // Hotel (365)
     const rnH= keys*365*(occH||0), revH= rnH*(adrH||0), opH= revH*(opex+mgmt), noiH= revH-opH, cfH = noiH - debtAnnual;
     const capH= total>0 ? (noiH/total) : 0, dscrH= debtAnnual>0 ? (noiH/debtAnnual) : 0;
 
-    // Minpaku (180 d)
+    // Minpaku (180)
     const rnM= keys*180*(occM||0), revM= rnM*(adrM||0), opM= revM*(opex+mgmt), noiM= revM-opM, cfM = noiM - debtAnnual;
     const capM= total>0 ? (noiM/total) : 0, dscrM= debtAnnual>0 ? (noiM/debtAnnual) : 0;
 
-    // Render scenario cards
+    // Render outputs
     get('noih').innerHTML = asUSD(noiH)+showJPY(noiH);
     get('caph').textContent= (capH*100).toFixed(1)+'%';
     get('coch').textContent= equity>0 ? (cfH/equity*100).toFixed(1)+'%' : '—';
@@ -325,12 +364,12 @@
       ' · Equity: <strong>'+asUSD(equity)+'</strong>'+showJPY(equity)+
       ' · DSCR (active): <strong id="dscr_active">—</strong>';
 
-    // Exit / IRR
+    // Exit / IRR / ROI
     const scenario = document.querySelector('input[name="scenario"]:checked').value;
     const exitCap=Math.max(v('exitcap')/100,0.0001), growth=v('growth')/100;
     const flipCap=Math.max(v('flip_exitcap')/100,0.0001), flipMonths=Math.max(parseInt(v('flip_months')),1);
 
-    let baseNOI, annCF, exitVal, sellCosts, loanAtExit, netProceeds, IRR;
+    let baseNOI, annCF, exitVal, sellCosts, loanAtExit, netProceeds, IRR, ROI=null;
 
     if(scenario==='hotel' || scenario==='minpaku'){
       baseNOI = (scenario==='hotel')?noiH:noiM;
@@ -341,7 +380,7 @@
       loanAtExit= loanBalAfterMonths(loan, rate, amort, 60);
       netProceeds= exitVal - sellCosts - loanAtExit;
       IRR= irr5yr(equity, annCF, netProceeds);
-
+      // ROI not shown for hold (multi-year cash flow); keep KPI as —
       get('table_exit').innerHTML = `
         <tr><th>Scenario</th><td>${scenario}</td></tr>
         <tr><th>Year-5 NOI (grown)</th><td>${asUSD(noiY5)}${showJPY(noiY5)}</td></tr>
@@ -351,7 +390,6 @@
         <tr><th>Loan Balance (Y5)</th><td>${asUSD(loanAtExit)}${showJPY(loanAtExit)}</td></tr>
         <tr><th>Net Sale Proceeds</th><td>${asUSD(netProceeds)}${showJPY(netProceeds)}</td></tr>
         <tr><th>Equity Invested</th><td>${asUSD(equity)}${showJPY(equity)}</td></tr>`;
-      // DSCR active for summary:
       get('dscr_active').textContent = (scenario==='hotel'?dscrH:dscrM) ? (scenario==='hotel'?dscrH:dscrM).toFixed(2) : '—';
 
     } else { // flip
@@ -361,6 +399,7 @@
       loanAtExit= loanBalAfterMonths(loan, rate, amort, flipMonths);
       netProceeds= exitVal - sellCosts - loanAtExit;
       IRR= irrMonths(equity, netProceeds, flipMonths);
+      ROI= equity>0 ? (netProceeds - equity)/equity : null;  // Total (unannualized)
 
       get('table_exit').innerHTML = `
         <tr><th>Scenario</th><td>flip</td></tr>
@@ -371,62 +410,30 @@
         <tr><th>Sell Costs (3%)</th><td>${asUSD(sellCosts)}${showJPY(sellCosts)}</td></tr>
         <tr><th>Loan @ Sale</th><td>${asUSD(loanAtExit)}${showJPY(loanAtExit)}</td></tr>
         <tr><th>Net Sale Proceeds</th><td>${asUSD(netProceeds)}${showJPY(netProceeds)}</td></tr>
-        <tr><th>Equity Invested</th><td>${asUSD(equity)}${showJPY(equity)}</td></tr>`;
-      get('dscr_active').textContent = '—'; // flip uses sale-based IRR
+        <tr><th>Equity Invested</th><td>${asUSD(equity)}${showJPY(equity)}</td></tr>
+        <tr><th>Total ROI</th><td>${ROI!=null ? (ROI*100).toFixed(1)+'%' : '—'}</td></tr>`;
+      get('dscr_active').textContent = '—';
     }
 
+    // IRR & Realism Gauge & ROI KPI
     get('irr').textContent   = (IRR*100).toFixed(1)+'%';
     get('exitv').innerHTML   = asUSD(exitVal)+showJPY(exitVal);
     get('net').innerHTML     = asUSD(netProceeds)+showJPY(netProceeds);
+    get('roi').textContent   = (ROI!=null ? (ROI*100).toFixed(1)+'%' : '—');
+    setGauge(IRR);
   }
 
-  // ---------- Tooltips (tap/hover, iPad-safe) ----------
-  const TIP_TEXT = {
-    noi:  "<strong>NOI — Net Operating Income</strong><br>Revenue minus operating expenses (before financing & taxes).",
-    cap:  "<strong>Cap Rate</strong><br>NOI ÷ total cost or market value; quick unlevered return snapshot.",
-    coc:  "<strong>Cash-on-Cash</strong><br>Pre-tax cash flow ÷ equity invested; annual yield on your actual cash.",
-    dscr: "<strong>DSCR — Debt Service Coverage Ratio</strong><br>NOI ÷ annual loan payments; >1.25× is typically bankable.",
-    irr:  "<strong>IRR — Internal Rate of Return</strong><br>Annualized return including income and sale proceeds over the hold."
-  };
-  let tipEl=null;
-  function showTip(target){
-    const key = target.getAttribute('data-tip');
-    if(!key) return;
-    hideTip();
-    tipEl = document.createElement('div');
-    tipEl.className='tooltip';
-    tipEl.innerHTML = TIP_TEXT[key] || '';
-    document.body.appendChild(tipEl);
-    const r = target.getBoundingClientRect();
-    const x = r.left + (r.width/2) - (tipEl.offsetWidth/2);
-    const y = r.bottom + 8 + window.scrollY;
-    tipEl.style.left = Math.max(8, Math.min(x, window.innerWidth - tipEl.offsetWidth - 8)) + 'px';
-    tipEl.style.top = y + 'px';
-  }
-  function hideTip(){ if(tipEl && tipEl.parentNode){ tipEl.parentNode.removeChild(tipEl); tipEl=null; } }
-
+  // Bind events (Safari/iPad-safe)
   function bind(){
-    // Scenario radios — use change/click/touchstart for iPad reliability
     Array.prototype.forEach.call(document.querySelectorAll('input[name="scenario"]'), el=>{
       el.addEventListener('change', compute, {passive:true});
       el.addEventListener('click', compute, {passive:true});
       el.addEventListener('touchstart', function(){ this.click(); }, {passive:true});
     });
-    // Inputs
     Array.prototype.forEach.call(document.querySelectorAll('input,select'), el=>{
       el.addEventListener('input', compute, {passive:true});
       el.addEventListener('change', compute, {passive:true});
     });
-    // Tooltips
-    document.querySelectorAll('.tip').forEach(btn=>{
-      btn.addEventListener('click', (e)=>{ e.stopPropagation(); if(tipEl) hideTip(); showTip(btn); }, {passive:true});
-      btn.addEventListener('mouseenter', ()=>showTip(btn));
-      btn.addEventListener('mouseleave', hideTip);
-      btn.addEventListener('touchstart', (e)=>{ e.stopPropagation(); if(tipEl) hideTip(); showTip(btn); }, {passive:true});
-    });
-    // Dismiss tooltip on outside tap/scroll
-    document.addEventListener('click', hideTip, {passive:true});
-    document.addEventListener('scroll', hideTip, {passive:true});
   }
 
   document.addEventListener('DOMContentLoaded', function(){
