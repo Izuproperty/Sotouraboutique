@@ -3,137 +3,406 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Shimoda Lodging Investment – USD Pro Forma (with FX) – v2</title>
+<title>S1737Z 柿崎中古ホテル — Investment Pro Forma (USD w/ FX)</title>
+<meta name="description" content="Investor-style pro forma for Shimoda lodging asset. Hotel vs Minpaku vs Flip scenarios with FX, financing, and exit IRR.">
 <style>
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 24px; line-height: 1.5; color: #0b0b0b; }
-  header { margin-bottom: 16px; }
-  h1 { font-size: 1.6rem; margin: 0 0 8px 0; }
-  h2 { font-size: 1.25rem; margin-top: 24px; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
-  .card { border: 1px solid #e5e5e5; border-radius: 8px; padding: 16px; background: #fff; }
-  label { display: block; font-weight: 600; font-size: 0.9rem; }
-  input, select { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 6px; margin-top: 6px; }
-  small { color: #585858; }
-  .muted { color: #555; }
-  .kpi { font-size: 1.2rem; font-weight: 700; }
-  table { width: 100%; border-collapse: collapse; margin-top: 8px; }
-  th, td { padding: 8px 6px; border-bottom: 1px dashed #e2e2e2; text-align: right; }
-  th { text-align: left; }
-  .row { display:flex; gap:8px; align-items: center; flex-wrap: wrap; }
-  .pill { display:inline-block; padding:6px 10px; border-radius:999px; border:1px solid #bbb; font-size:0.9rem; cursor:pointer; user-select:none; }
-  .pill.active { border-color:#111; box-shadow: 0 0 0 2px rgba(0,0,0,0.06) inset; font-weight:700; }
-  a.listing { text-decoration: none; border-bottom: 1px dashed #888; }
-  .fxnote{font-size:0.9rem; color:#444;margin-top:6px}
-  footer { margin-top: 28px; font-size: 0.9rem; }
-  code { background:#f5f5f5; padding:2px 6px; border-radius: 4px; }
+  :root{
+    --bg:#f7f8fb;
+    --panel:#ffffff;
+    --ink:#0a0a0a;
+    --muted:#5a5f6a;
+    --brand:#1d3b8b;
+    --accent:#0f8b64;
+    --border:#e5e7ef;
+    --shadow:0 6px 18px rgba(12,20,55,0.06);
+    --radius:14px;
+  }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.5}
+  .wrap{max-width:1080px;margin:20px auto;padding:0 16px}
+  header.hero{
+    background:linear-gradient(135deg, #182d66 0%, #2647a4 60%, #2c66ee 100%);
+    color:#fff;border-radius:18px;padding:22px;box-shadow:var(--shadow)
+  }
+  .hero h1{margin:0 0 6px;font-size:1.55rem;font-weight:800;letter-spacing:.2px}
+  .hero p{margin:.25rem 0 0;color:#e6ebff}
+  .badge{display:inline-flex;gap:8px;align-items:center;margin-top:10px}
+  .tag{font-size:.8rem;border:1px solid rgba(255,255,255,.35);padding:.2rem .6rem;border-radius:999px}
+  .hero a{color:#eafff6;text-decoration:underline}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+  .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  h2{font-size:1.05rem;margin:0 0 10px}
+  label{font-weight:600;font-size:.92rem;display:block;margin:.35rem 0 .1rem}
+  input,select{
+    width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:#fff;font-size:.95rem;
+    -webkit-appearance:none;appearance:none
+  }
+  small, .muted{color:var(--muted)}
+  .seg{
+    display:inline-grid;grid-auto-flow:column;gap:0;border:1px solid var(--border);border-radius:999px;background:#fff;overflow:hidden
+  }
+  .seg input[type="radio"]{position:absolute;opacity:0;pointer-events:none}
+  .seg label{
+    padding:.55rem .9rem;cursor:pointer;user-select:none;font-weight:700;color:#23304d;border-right:1px solid var(--border);
+    white-space:nowrap
+  }
+  .seg label:last-of-type{border-right:0}
+  .seg input:focus + label{outline:2px solid #9bc1ff;outline-offset:-2px}
+  .seg input:checked + label{background:var(--brand);color:#fff}
+  .kpis{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-top:6px}
+  .kpi{background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center}
+  .kpi .h{font-size:.8rem;color:var(--muted)}
+  .kpi .v{font-size:1.25rem;font-weight:800;margin-top:4px}
+  table{width:100%;border-collapse:collapse;margin-top:8px}
+  th,td{padding:8px 6px;border-bottom:1px dashed var(--border);font-size:.95rem}
+  th{text-align:left;color:#344057}
+  td{text-align:right}
+  .note{font-size:.9rem}
+  footer{color:var(--muted);font-size:.9rem;margin:22px 0}
+  .section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+  .callout{border-left:4px solid var(--accent);padding:10px 12px;background:#f3fbf8;border-radius:8px;margin-top:10px}
+  .pill-help{font-size:.82rem;color:#114b39}
+  .divider{height:1px;background:var(--border);margin:10px 0}
+  .align-end{display:flex;gap:10px;align-items:center;justify-content:flex-end}
 </style>
 </head>
 <body>
-<header>
-  <h1>Shimoda Lodging Investment – USD Pro Forma (with FX)</h1>
-  <div class="muted">
-    Asset: <strong>S1737Z 柿崎中古ホテル</strong> · 下田市柿崎 · 404.44㎡（延床） · 8客室 · 1974年築 · 改装2019年（R1） · 
-    <a class="listing" href="https://www.izumirai.com/bkndetail/3966776075/room97540665/" target="_blank">View Listing</a>
-  </div>
-  <div class="row" style="margin-top:8px;">
-    <div id="tab_hotel" class="pill active">Hotel</div>
-    <div id="tab_minpaku" class="pill">Minpaku (180d)</div>
-    <div id="tab_flip" class="pill">Flip</div>
-  </div>
-  <div class="muted" style="margin-top:6px;">Click a scenario to drive exit/IRR math below.</div>
-</header>
+  <div class="wrap">
 
-<section class="grid">
-  <div class="card">
-    <h2>FX & Display</h2>
-    <label>FX Rate (JPY per 1 USD)<input id="fx" type="number" value="150" step="0.5"></label>
-    <label>Show JPY equivalents?
-      <select id="show_jpy">
-        <option value="yes" selected>Yes</option>
-        <option value="no">No</option>
-      </select>
-    </label>
-  </div>
+    <!-- HERO -->
+    <header class="hero" role="banner">
+      <h1>S1737Z 柿崎中古ホテル — Investment Pro Forma</h1>
+      <p>Shimoda (下田市柿崎) · 404.44㎡延床 · 8 keys · 1974 build · 2019 renovation · <a href="https://www.izumirai.com/bkndetail/3966776075/room97540665/" target="_blank" rel="noopener">View Listing</a></p>
+      <div class="badge">
+        <span class="tag">Boutique Hotel</span>
+        <span class="tag">Minpaku Compliance</span>
+        <span class="tag">Flip Analysis</span>
+      </div>
+    </header>
 
-  <div class="card">
-    <h2>Acquisition & CapEx (USD)</h2>
-    <label>Purchase Price ($)<input id="price_usd" type="number" value="532000" step="5000"></label>
-    <label>Closing + Soft Costs (%)<input id="soft" type="number" value="3" step="0.5"></label>
-    <label>Renovation / Upgrades ($)<input id="reno_usd" type="number" value="135000" step="5000"></label>
-    <label>Rooms (keys)<input id="keys" type="number" value="8" step="1"></label>
-  </div>
+    <!-- SCENARIO SWITCHER -->
+    <div class="panel" style="margin-top:16px">
+      <div class="section-title">
+        <h2>Scenario</h2>
+        <div class="seg" role="radiogroup" aria-label="Scenario selector">
+          <input type="radio" id="sc_hotel"   name="scenario" value="hotel" checked>
+          <label for="sc_hotel" title="Operate as licensed hotel/ryokan (365 days)">Hotel</label>
 
-  <div class="card">
-    <h2>Operations – Hotel License</h2>
-    <label>ADR ($/room-night)<input id="adr_hotel" type="number" value="160"></label>
-    <label>Occupancy (%)<input id="occ_hotel" type="number" value="60"></label>
-    <label>Opex (% of rev)<input id="opex" type="number" value="55"></label>
-    <label>Mgmt/OTA (% of rev)<input id="mgmt" type="number" value="12"></label>
-  </div>
+          <input type="radio" id="sc_minpaku" name="scenario" value="minpaku">
+          <label for="sc_minpaku" title="Operate under 住宅宿泊事業法 (180-day annual cap)">Minpaku (180d)</label>
 
-  <div class="card">
-    <h2>Operations – Minpaku (180d)</h2>
-    <label>ADR ($/room-night)<input id="adr_minpaku" type="number" value="175"></label>
-    <label>Occupancy (%)<input id="occ_minpaku" type="number" value="65"></label>
-  </div>
+          <input type="radio" id="sc_flip"    name="scenario" value="flip">
+          <label for="sc_flip" title="Sell post-renovation at buyer cap, minimal operations">Flip</label>
+        </div>
+      </div>
+      <div class="callout">
+        <div class="pill-help"><strong>Tip:</strong> The selected scenario drives the Exit Value & IRR below. Toggle to compare hold vs. flip outcomes.</div>
+      </div>
+    </div>
 
-  <div class="card">
-    <h2>Financing</h2>
-    <label>LTV (%)<input id="ltv" type="number" value="70"></label>
-    <label>Interest Rate (% p.a.)<input id="rate" type="number" value="2.2"></label>
-    <label>Amortization (yrs)<input id="amort" type="number" value="20"></label>
-  </div>
-</section>
+    <!-- INPUTS -->
+    <div class="grid" style="margin-top:16px">
+      <div class="panel">
+        <h2>FX & Display</h2>
+        <label>FX Rate (JPY per 1 USD)</label>
+        <input id="fx" type="number" step="0.5" value="150" inputmode="decimal">
+        <label>Show JPY equivalents</label>
+        <select id="show_jpy">
+          <option value="yes" selected>Yes</option>
+          <option value="no">No</option>
+        </select>
+        <small class="muted">USD is the modeling currency; JPY shows alongside using the FX rate above.</small>
+      </div>
 
-<section class="grid">
-  <div class="card" id="card_hotel">
-    <h2>Hotel Results</h2>
-    <div id="kpi_hotel" class="kpi">—</div>
-    <table id="table_hotel"></table>
-  </div>
-  <div class="card" id="card_minpaku">
-    <h2>Minpaku Results</h2>
-    <div id="kpi_minpaku" class="kpi">—</div>
-    <table id="table_minpaku"></table>
-  </div>
-  <div class="card">
-    <h2>Flip Settings</h2>
-    <label>Buyer Exit Cap Rate (%)<input id="flip_exitcap" type="number" value="8"></label>
-    <label>Months to Sale<input id="flip_months" type="number" value="12"></label>
-  </div>
-  <div class="card">
-    <h2>Exit / IRR (Driven by Active Scenario)</h2>
-    <label>Exit Cap Rate (%)<input id="exitcap" type="number" value="8"></label>
-    <label>Annual Value Growth (%)<input id="growth" type="number" value="1.5"></label>
-    <div id="kpi_exit" class="kpi">—</div>
-    <table id="table_exit"></table>
-  </div>
-</section>
+      <div class="panel">
+        <h2>Acquisition & CapEx (USD)</h2>
+        <label>Purchase Price ($)</label>
+        <input id="price_usd" type="number" step="1000" value="532000" inputmode="numeric">
+        <label>Closing + Soft Costs (%)</label>
+        <input id="soft" type="number" step="0.5" value="3">
+        <label>Renovation / Upgrades ($)</label>
+        <input id="reno_usd" type="number" step="5000" value="135000">
+        <label>Keys (Rooms)</label>
+        <input id="keys" type="number" step="1" value="8">
+        <small class="muted">Adjust keys if combining rooms into larger suites.</small>
+      </div>
 
-<footer class="muted">Educational use only; not financial advice.</footer>
+      <div class="panel">
+        <h2>Operations — Hotel (USD)</h2>
+        <label>ADR (avg daily rate)</label>
+        <input id="adr_hotel" type="number" step="5" value="160">
+        <label>Occupancy (%)</label>
+        <input id="occ_hotel" type="number" step="1" value="60">
+        <label>Operating Expense Ratio (% of revenue)</label>
+        <input id="opex" type="number" step="1" value="55">
+        <label>Mgmt & OTA (% of revenue)</label>
+        <input id="mgmt" type="number" step="0.5" value="12">
+      </div>
+
+      <div class="panel">
+        <h2>Operations — Minpaku (USD)</h2>
+        <label>ADR (on active days)</label>
+        <input id="adr_minpaku" type="number" step="5" value="175">
+        <label>Occupancy on Active Days (%)</label>
+        <input id="occ_minpaku" type="number" step="1" value="65">
+        <small class="muted">Minpaku capped at 180 days/year of availability.</small>
+      </div>
+
+      <div class="panel">
+        <h2>Financing</h2>
+        <label>LTV (%)</label>
+        <input id="ltv" type="number" step="1" value="70">
+        <label>Interest Rate (% p.a.)</label>
+        <input id="rate" type="number" step="0.1" value="2.2">
+        <label>Amortization (years)</label>
+        <input id="amort" type="number" step="1" value="20">
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="grid" style="margin-top:16px">
+      <div class="panel">
+        <div class="section-title"><h2>Hotel — Outputs</h2></div>
+        <div class="kpis">
+          <div class="kpi"><div class="h">NOI</div><div id="noih" class="v">—</div></div>
+          <div class="kpi"><div class="h">Cap Rate</div><div id="caph" class="v">—</div></div>
+          <div class="kpi"><div class="h">Cash-on-Cash</div><div id="coch" class="v">—</div></div>
+          <div class="kpi"><div class="h">DSCR</div><div id="dscrh" class="v">—</div></div>
+        </div>
+        <table id="table_hotel"></table>
+      </div>
+
+      <div class="panel">
+        <div class="section-title"><h2>Minpaku — Outputs</h2></div>
+        <div class="kpis">
+          <div class="kpi"><div class="h">NOI</div><div id="noim" class="v">—</div></div>
+          <div class="kpi"><div class="h">Cap Rate</div><div id="capm" class="v">—</div></div>
+          <div class="kpi"><div class="h">Cash-on-Cash</div><div id="cocm" class="v">—</div></div>
+          <div class="kpi"><div class="h">DSCR</div><div id="dscrm" class="v">—</div></div>
+        </div>
+        <table id="table_minpaku"></table>
+      </div>
+
+      <div class="panel">
+        <div class="section-title"><h2>Flip Settings</h2></div>
+        <label>Buyer Exit Cap (%)</label>
+        <input id="flip_exitcap" type="number" step="0.5" value="8">
+        <label>Months to Sale</label>
+        <input id="flip_months" type="number" step="1" value="12">
+        <div class="divider"></div>
+        <div class="note muted">Flip value uses the stronger of Hotel/Minpaku stabilized NOI divided by Buyer Exit Cap. IRR uses equity outflow at close and net sale at the chosen month; interim CF assumed de minimis aside from debt service (captured via loan balance at sale).</div>
+      </div>
+
+      <div class="panel">
+        <div class="section-title"><h2>Exit / IRR (Selected Scenario)</h2></div>
+        <label>Exit Cap Rate (%)</label>
+        <input id="exitcap" type="number" step="0.5" value="8">
+        <label>Annual Value Growth (%)</label>
+        <input id="growth" type="number" step="0.5" value="1.5">
+        <div class="kpis">
+          <div class="kpi"><div class="h">IRR</div><div id="irr" class="v">—</div></div>
+          <div class="kpi"><div class="h">Exit Value</div><div id="exitv" class="v">—</div></div>
+          <div class="kpi"><div class="h">Net Sale Proceeds</div><div id="net" class="v">—</div></div>
+        </div>
+        <table id="table_exit"></table>
+      </div>
+    </div>
+
+    <footer>
+      <div class="divider"></div>
+      <div class="note">For discussion purposes only; not investment advice. Assumptions are user-editable. Licensing (旅館業/民泊), fire/life safety, and seismic compliance require local confirmation.</div>
+    </footer>
+  </div>
 
 <script>
-let scenario='hotel';
-function fmtUSD(x){return '$'+x.toLocaleString('en-US',{maximumFractionDigits:0});}
-function fmtJPY(x){return '¥'+x.toLocaleString('ja-JP');}
-function mortgagePayment(p, rA, y){const r=rA/100/12,n=y*12;return p*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);}
-function maybeJPY(v){const fx=+fxEl.value;return showEl.value==='yes'?' <span class="muted">('+fmtJPY(Math.round(v*fx))+')</span>':'';}
-const fxEl=document.getElementById('fx');const showEl=document.getElementById('show_jpy');
-['tab_hotel','tab_minpaku','tab_flip'].forEach(id=>{document.getElementById(id).onclick=()=>{scenario=id.split('_')[1];['tab_hotel','tab_minpaku','tab_flip'].forEach(i=>document.getElementById(i).classList.toggle('active',i===id));compute();};});
-function compute(){const fx=+fxEl.value;
-const price=+price_usd.value,soft=+soft.value,reno=+reno_usd.value,keys=+keys.value;
-const adrH=+adr_hotel.value,occH=+occ_hotel.value/100,adrM=+adr_minpaku.value,occM=+occ_minpaku.value/100,opexR=+opex.value/100,mgmtR=+mgmt.value/100;
-const ltv=+ltv.value/100,rate=+rate.value,amort=+amort.value,exitcap=+exitcap.value/100,growth=+growth.value/100,flipCap=+flip_exitcap.value/100,flipMonths=+flip_months.value;
-const softCost=price*soft/100,total=price+softCost+reno,loan=total*ltv,equity=total-loan,ds=mortgagePayment(loan,rate,amort)*12;
-const rnH=keys*365*occH,revH=rnH*adrH,opH=revH*(opexR+mgmtR),noiH=revH-opH,cfH=noiH-ds;
-const rnM=keys*180*occM,revM=rnM*adrM,opM=revM*(opexR+mgmtR),noiM=revM-opM,cfM=noiM-ds;
-kpi_hotel.innerHTML=`NOI ${fmtUSD(noiH)}${maybeJPY(noiH)} · CoC ${(cfH/equity*100).toFixed(1)}%`;
-table_hotel.innerHTML=`<tr><th>Revenue</th><td>${fmtUSD(revH)}${maybeJPY(revH)}</td></tr><tr><th>NOI</th><td>${fmtUSD(noiH)}${maybeJPY(noiH)}</td></tr>`;
-kpi_minpaku.innerHTML=`NOI ${fmtUSD(noiM)}${maybeJPY(noiM)} · CoC ${(cfM/equity*100).toFixed(1)}%`;
-table_minpaku.innerHTML=`<tr><th>Revenue</th><td>${fmtUSD(revM)}${maybeJPY(revM)}</td></tr><tr><th>NOI</th><td>${fmtUSD(noiM)}${maybeJPY(noiM)}</td></tr>`;
-let baseNOI=scenario==='hotel'?noiH:scenario==='minpaku'?noiM:Math.max(noiH,noiM);
-let irr,exitV,sell,balA,net;
-if(scenario!=='flip'){const n5=baseNOI*Math.pow(1+growth,4);exitV=n5/exitcap;sell=exitV*0.03;
-const m=mortgagePayment(loan,rate,amort),r=rate/100/12,N=amort*12,paid=60;balA=loan*Math.pow(1+r,N)-m*(Math.pow(1+r,paid)-1)/r;
-net=exitV-sell-balA;
-function irrB(c0,cf,term){let lo=-.9,hi=1;for(let i=0;i<60;i
+(function(){
+  "use strict";
+
+  // -------- Utilities --------
+  const usd = new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});
+  const jpy = new Intl.NumberFormat('ja-JP',{style:'currency',currency:'JPY',maximumFractionDigits:0});
+  const pct = (x)=> (x*100).toFixed(1)+'%';
+  const asUSD = (x)=> usd.format(Math.round(x||0));
+  const asJPY = (x)=> jpy.format(Math.round(x||0));
+
+  function val(id){ const el=document.getElementById(id); return parseFloat(el && el.value) || 0; }
+  function txt(id, s){ const el=document.getElementById(id); if(el) el.innerHTML = s; }
+  function maybeJPY(amountUSD){
+    const show = document.getElementById('show_jpy').value === 'yes';
+    const fx   = val('fx') || 1;
+    return show ? ` <span class="muted">(${asJPY(amountUSD * fx)})</span>` : '';
+  }
+
+  function mortPmt(P, annualRate, years){
+    const r = (annualRate/100)/12, n = years*12;
+    if(r===0) return P/n;
+    const top = P * r * Math.pow(1+r, n);
+    return top / (Math.pow(1+r, n) - 1);
+  }
+
+  // -------- Core compute --------
+  function compute(){
+    // Inputs
+    const price = val('price_usd'), softPct = val('soft')/100, reno = val('reno_usd'), keys = Math.max(val('keys'),0);
+    const adrH = val('adr_hotel'), occH = val('occ_hotel')/100;
+    const adrM = val('adr_minpaku'), occM = val('occ_minpaku')/100;
+    const opex = val('opex')/100, mgmt = val('mgmt')/100;
+    const ltv = val('ltv')/100, rate = val('rate'), amort = Math.max(val('amort'),1);
+    const exitcap = Math.max(val('exitcap')/100, 0.0001), growth = val('growth')/100;
+    const flipCap = Math.max(val('flip_exitcap')/100, 0.0001), flipMonths = Math.max(val('flip_months'),1);
+
+    const totalCost = price + price*softPct + reno;
+    const loan = totalCost * ltv;
+    const equity = totalCost - loan;
+    const debtAnnual = mortPmt(loan, rate, amort) * 12;
+
+    // Hotel (365 days)
+    const rnH = keys * 365 * (occH||0);
+    const revH = rnH * (adrH||0);
+    const opH  = revH * (opex + mgmt);
+    const noiH = revH - opH;
+    const cfH  = noiH - debtAnnual;
+    const capH = totalCost>0 ? (noiH/totalCost) : 0;
+    const dscrH = debtAnnual>0 ? (noiH/debtAnnual) : 0;
+
+    // Minpaku (180 days)
+    const rnM = keys * 180 * (occM||0);
+    const revM = rnM * (adrM||0);
+    const opM  = revM * (opex + mgmt);
+    const noiM = revM - opM;
+    const cfM  = noiM - debtAnnual;
+    const capM = totalCost>0 ? (noiM/totalCost) : 0;
+    const dscrM = debtAnnual>0 ? (noiM/debtAnnual) : 0;
+
+    // Render scenario cards
+    txt('noih', asUSD(noiH) + maybeJPY(noiH));
+    txt('caph', (capH*100).toFixed(1)+'%');
+    txt('coch', equity>0 ? (cfH/equity*100).toFixed(1)+'%' : '—');
+    txt('dscrh', dscrH ? dscrH.toFixed(2) : '—');
+    document.getElementById('table_hotel').innerHTML = `
+      <tr><th>Room Nights Sold</th><td>${Math.round(rnH).toLocaleString('en-US')}</td></tr>
+      <tr><th>Revenue</th><td>${asUSD(revH)}${maybeJPY(revH)}</td></tr>
+      <tr><th>Operating Costs</th><td>${asUSD(opH)}${maybeJPY(opH)}</td></tr>
+      <tr><th>Debt Service (annual)</th><td>${asUSD(debtAnnual)}${maybeJPY(debtAnnual)}</td></tr>
+      <tr><th>Cash Flow (pre-tax)</th><td>${asUSD(cfH)}${maybeJPY(cfH)}</td></tr>
+      <tr><th>Total Cost</th><td>${asUSD(totalCost)}${maybeJPY(totalCost)}</td></tr>
+      <tr><th>Equity</th><td>${asUSD(equity)}${maybeJPY(equity)}</td></tr>
+    `;
+
+    txt('noim', asUSD(noiM) + maybeJPY(noiM));
+    txt('capm', (capM*100).toFixed(1)+'%');
+    txt('cocm', equity>0 ? (cfM/equity*100).toFixed(1)+'%' : '—');
+    txt('dscrm', dscrM ? dscrM.toFixed(2) : '—');
+    document.getElementById('table_minpaku').innerHTML = `
+      <tr><th>Room Nights Sold</th><td>${Math.round(rnM).toLocaleString('en-US')}</td></tr>
+      <tr><th>Revenue</th><td>${asUSD(revM)}${maybeJPY(revM)}</td></tr>
+      <tr><th>Operating Costs</th><td>${asUSD(opM)}${maybeJPY(opM)}</td></tr>
+      <tr><th>Debt Service (annual)</th><td>${asUSD(debtAnnual)}${maybeJPY(debtAnnual)}</td></tr>
+      <tr><th>Cash Flow (pre-tax)</th><td>${asUSD(cfM)}${maybeJPY(cfM)}</td></tr>
+      <tr><th>Total Cost</th><td>${asUSD(totalCost)}${maybeJPY(totalCost)}</td></tr>
+      <tr><th>Equity</th><td>${asUSD(equity)}${maybeJPY(equity)}</td></tr>
+    `;
+
+    // Selected scenario for Exit/IRR
+    const sc = document.querySelector('input[name="scenario"]:checked').value;
+    let baseNOI, annCF, exitVal, sellCosts, loanAtExit, netProceeds, irr;
+
+    // Common loan balance math
+    function loanBalanceAfterMonths(P, rateAnnual, years, mths){
+      const r = (rateAnnual/100)/12, N = years*12, pmt = mortPmt(P, rateAnnual, years);
+      return P*Math.pow(1+r,N) - pmt*(Math.pow(1+r,mths)-1)/r;
+    }
+
+    // IRR solvers
+    function irrFiveYear(equityOut, annualCF, terminal){
+      let lo=-0.99, hi=1.5, mid=0;
+      for(let i=0;i<60;i++){
+        mid=(lo+hi)/2;
+        let npv=-equityOut;
+        for(let t=1;t<=5;t++) npv += annualCF/Math.pow(1+mid,t);
+        npv += terminal/Math.pow(1+mid,5);
+        if(npv>0) lo=mid; else hi=mid;
+      }
+      return (lo+hi)/2;
+    }
+    function irrMonths(equityOut, terminal, months){
+      let lo=-0.99, hi=2.0, mid=0;
+      for(let i=0;i<60;i++){
+        mid=(lo+hi)/2;
+        const npv = -equityOut + terminal/Math.pow(1+mid, months/12);
+        if(npv>0) lo=mid; else hi=mid;
+      }
+      return (lo+hi)/2;
+    }
+
+    if(sc==='hotel' || sc==='minpaku'){
+      baseNOI = (sc==='hotel')? noiH : noiM;
+      annCF   = (sc==='hotel')? cfH  : cfM;
+
+      const noiY5 = baseNOI * Math.pow(1+growth, 4);
+      exitVal = noiY5 / exitcap;
+      sellCosts = exitVal * 0.03;
+      loanAtExit = loanBalanceAfterMonths(loan, rate, amort, 60);
+      netProceeds = exitVal - sellCosts - loanAtExit;
+      irr = irrFiveYear(equity, annCF, netProceeds);
+
+      document.getElementById('table_exit').innerHTML = `
+        <tr><th>Scenario</th><td>${sc}</td></tr>
+        <tr><th>Year-5 NOI (grown)</th><td>${asUSD(noiY5)}${maybeJPY(noiY5)}</td></tr>
+        <tr><th>Exit Cap</th><td>${(exitcap*100).toFixed(1)}%</td></tr>
+        <tr><th>Exit Value</th><td>${asUSD(exitVal)}${maybeJPY(exitVal)}</td></tr>
+        <tr><th>Sell Costs (3%)</th><td>${asUSD(sellCosts)}${maybeJPY(sellCosts)}</td></tr>
+        <tr><th>Loan Balance (Y5)</th><td>${asUSD(loanAtExit)}${maybeJPY(loanAtExit)}</td></tr>
+        <tr><th>Net Sale Proceeds</th><td>${asUSD(netProceeds)}${maybeJPY(netProceeds)}</td></tr>
+        <tr><th>Equity Invested</th><td>${asUSD(equity)}${maybeJPY(equity)}</td></tr>
+      `;
+    } else { // flip
+      baseNOI = Math.max(noiH, noiM);
+      exitVal = baseNOI / flipCap;
+      sellCosts = exitVal * 0.03;
+      loanAtExit = loanBalanceAfterMonths(loan, rate, amort, flipMonths);
+      netProceeds = exitVal - sellCosts - loanAtExit;
+      irr = irrMonths(equity, netProceeds, flipMonths);
+
+      document.getElementById('table_exit').innerHTML = `
+        <tr><th>Scenario</th><td>flip</td></tr>
+        <tr><th>Buyer Exit Cap</th><td>${(flipCap*100).toFixed(1)}%</td></tr>
+        <tr><th>Months to Sale</th><td>${flipMonths}</td></tr>
+        <tr><th>Stabilized NOI (marketing)</th><td>${asUSD(baseNOI)}${maybeJPY(baseNOI)}</td></tr>
+        <tr><th>Exit Value</th><td>${asUSD(exitVal)}${maybeJPY(exitVal)}</td></tr>
+        <tr><th>Sell Costs (3%)</th><td>${asUSD(sellCosts)}${maybeJPY(sellCosts)}</td></tr>
+        <tr><th>Loan @ Sale</th><td>${asUSD(loanAtExit)}${maybeJPY(loanAtExit)}</td></tr>
+        <tr><th>Net Sale Proceeds</th><td>${asUSD(netProceeds)}${maybeJPY(netProceeds)}</td></tr>
+        <tr><th>Equity Invested</th><td>${asUSD(equity)}${maybeJPY(equity)}</td></tr>
+      `;
+    }
+
+    // KPI strip for Exit
+    txt('irr', (irr*100).toFixed(1)+'%');
+    txt('exitv', asUSD(exitVal) + maybeJPY(exitVal));
+    txt('net', asUSD(netProceeds) + maybeJPY(netProceeds));
+  }
+
+  // -------- Event wiring (Safari-friendly) --------
+  function bindAll(){
+    // Scenario radios (use 'change' for iPad Safari reliability)
+    Array.prototype.forEach.call(document.querySelectorAll('input[name="scenario"]'), function(r){
+      r.addEventListener('change', compute, {passive:true});
+      r.addEventListener('click', compute, {passive:true});
+      r.addEventListener('touchstart', function(){ this.click(); }, {passive:true});
+    });
+    // Inputs
+    Array.prototype.forEach.call(document.querySelectorAll('input, select'), function(el){
+      el.addEventListener('input', compute, {passive:true});
+      el.addEventListener('change', compute, {passive:true});
+    });
+  }
+
+  // Init
+  document.addEventListener('DOMContentLoaded', function(){
+    bindAll();
+    compute();
+  });
+})();
+</script>
+</body>
+</html>
